@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8">
+  <title>Calculator</title>
+  <style>
+    body { font-family: Arial, sans-serif; background: #f4f4f4; display: flex; flex-direction: column; align-items: center; padding-top: 40px; }
+    .layout { display: flex; gap: 25px; align-items: flex-start; }
+    .calc { background: white; padding: 20px; border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.1); width: 280px; }
+    .display { width: 100%; font-size: 2rem; padding: 10px; margin-bottom: 15px; text-align: right; border: 1px solid #ccc; border-radius: 6px; }
+    .buttons { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; }
+    button { padding: 15px; font-size: 1.1rem; border: none; border-radius: 6px; cursor: pointer; }
+    button.operator { background: #ff9f43; color: white; }
+    button.equal { background: #1dd1a1; color: white; grid-column: span 2; }
+    button.clear { background: #ff6b6b; color: white; grid-column: span 2; }
+    .history { width: 220px; background: white; padding: 15px; border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.1); }
+    .history h2 { margin-top: 0; font-size: 1.1rem; text-align: center; }
+    .history ul { list-style: none; padding: 0; margin: 0; }
+    .history li { padding: 6px 4px; border-bottom: 1px solid #eee; font-size: 0.95rem; }
+    .history li:last-child { border-bottom: none; }
+  </style>
+</head>
+<body>
+  <h1>Calculator by Wasif</h1>
+  <div class="layout">
+    <div class="calc">
+      <input type="text" class="display" id="display" disabled>
+      <div class="buttons">
+        <button class="clear" onclick="clearDisplay()">C</button>
+        <button onclick="append('.')">.</button>
+        <button onclick="append('/')">÷</button>
+        <button onclick="append('7')">7</button>
+        <button onclick="append('8')">8</button>
+        <button onclick="append('9')">9</button>
+        <button class="operator" onclick="append('*')">×</button>
+        <button onclick="append('4')">4</button>
+        <button onclick="append('5')">5</button>
+        <button onclick="append('6')">6</button>
+        <button class="operator" onclick="append('-')">−</button>
+        <button onclick="append('1')">1</button>
+        <button onclick="append('2')">2</button>
+        <button onclick="append('3')">3</button>
+        <button class="operator" onclick="append('+')">+</button>
+        <button onclick="append('0')">0</button>
+        <button onclick="append('00')">00</button>
+        <button class="equal" onclick="calculate()">=</button>
+      </div>
+    </div>
+    <div class="history">
+      <h2>History</h2>
+      <ul id="historyList">
+        <li>No calculations yet</li>
+      </ul>
+    </div>
+  </div>
+
+  <script>
+    const display = document.getElementById('display');
+    const historyList = document.getElementById('historyList');
+    const history = [];
+
+    function append(value) {
+      display.value += value;
+    }
+    function clearDisplay() {
+      display.value = '';
+    }
+    function calculate() {
+      try {
+        const expression = display.value;
+        const result = eval(expression);
+        display.value = result;
+        addToHistory(expression, result);
+      } catch {
+        display.value = 'Error';
+      }
+    }
+    function addToHistory(expression, result) {
+      if (!expression) return;
+      history.unshift(`${expression} = ${result}`);
+      if (history.length > 6) {
+        history.pop();
+      }
+      updateHistoryList();
+    }
+    function updateHistoryList() {
+      if (!history.length) {
+        historyList.innerHTML = '<li>No calculations yet</li>';
+        return;
+      }
+      historyList.innerHTML = history.map(item => `<li>${item}</li>`).join('');
+    }
+  </script>
+</body>
+</html>
