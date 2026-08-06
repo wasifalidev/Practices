@@ -93,6 +93,21 @@ export default async function Home() {
             <code>postsSlice</code>
           </div>
         </div>
+
+        {/* CTA BUTTONS */}
+        <div className="hero-cta-row">
+          <a href="/tutorial" className="cta-btn cta-primary">
+            📚 Step-by-Step Tutorial
+          </a>
+          <a
+            href="https://redux-toolkit.js.org/tutorials/quick-start"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="cta-btn cta-secondary"
+          >
+            📖 Official Docs ↗
+          </a>
+        </div>
       </header>
 
       {/* ─── CONCEPT GRID ────────────────────────────── */}
